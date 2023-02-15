@@ -1,0 +1,233 @@
+% !Mode:: "TeX:UTF-8"
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{subfigure}
+\usepackage{epstopdf}
+
+\usepackage{CJKutf8}% 中文支持
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+\title{Evolution of the External Owned Account Trading Network on Ethereum\\
+% {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and should not be used}
+% \thanks{Identify applicable funding agency here. If none, delete this.}
+}
+
+\author{\IEEEauthorblockN{Yunjie Chen}
+\IEEEauthorblockA{\textit{ School of Computer Science and Engineering } \\
+\textit{ University of Electronic Science and Technology of China }\\
+Chengdu, China \\
+rothleer@outlook.com }
+\and
+\IEEEauthorblockN{Zhihai Rong}
+\IEEEauthorblockA{\textit{ School of Computer Science and Engineering } \\
+\textit{ University of Electronic Science and Technology of China }\\
+Chengdu, China \\
+rongzhh@gmail.com }
+}
+
+\maketitle
+
+\begin{abstract}
+In this paper, we investigated the evolution of the External owned account Trading Network($ETN$) on Ethereum from August 10th, 2015 to June 9th, 2017 through the perspective of network science. It is showed that the evolution of the topological properties of the $ETN$ and important events are closely related. The average degree of the $ETN$ is not constant but fluctuates within a small range of $(2.1,3.2)$. And there exists the extremely strongly positive correlation between the number of nodes and the number of edges in the $ETN$. Moreover, following the events happening, the degree distribution of $ETN$ changes obviously. Moreover, the $ETN$ has smaller values of degree correlation coefficient and clustering coefficient than that of the randomized graph with the same degree sequence, which implies that $ETN$ shows the disassortative mixing pattern by degree and owns few triangles. Through the method of k-shell decomposition, our investigation shows the core of the $ETN$ grows stepwise.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Complex networks, Blockchain, Ethereum
+\end{IEEEkeywords}
+
+\section{Introduce}
+
+Blockchain technology originated from the seminal paper published by Satoshi Nakamoto in 2008\cite{nakamoto 2019 bitcoin}. It features distributed high redundancy storage, temporal data and unmodifiable and falsifiable, decentralized credit, etc\cite{crosby2016blockchain}. Many projects have been proposed based on the features of the blockchain, the sharing of management resources for research projects\cite{bai2018researchain}, the sharing of electronic medical records\cite{ni2019healchain}, the sharing platform for educational resources\cite{hou2019educational}, and so on.
+
+The anonymity of blockchain technology guarantees privacy, but it also brings difficulties to supervision. The well-known virus \textit{wannacry} uses the anonymous feature of blockchain to extort Bitcoins from users. Therefore, how to supervise the blockchain is an important issue. Ethereum is one of the most famous public blockchain projects which released in 2014\cite{wood2014ethereum}. The complex network theory provides a theoretical framework \cite{newman2003structure}\cite{barabasi2007architecture} for researching the network composed of complex transaction behaviors among Ethereum users. The seminal work in \cite{chen2018understanding} provided a method for reading Ethereum data and found that the degree distribution of the Ethereum transaction network obeyed the power-law distribution. In this paper, we focus on the evolution of $ETN$ to increase understanding of blockchain and to provide references for the application and supervision of blockchain projects.
+
+\section{Datasets And Definitions}
+\subsection{Datasets}
+
+The data of user transactions on Ethereum from \cite{chen2018understanding}. There are two types of accounts on Ethereum, one is an external owned account controlled by users such as real people, organizations, and wallet applications. Such accounts can actively initiate and accept transactions. The other type of account is the Smart Contract Account. The smart contract account can only passively accept transactions from external owned accounts and call smart contracts stored inside the smart contract account. Since smart contracts are not widely used\cite{chen2018understanding}, we only use data from transactions between external owned accounts, i.e. the sender and receiver are both external owned accounts.
+
+External events will affect the trading decisions of Ethereum users. To explore the impact of external events on the evolution of the Ethereum external account trading network (abbreviation: $ETN$), we collected events from August 10, 2015, to June 9, 2017, on Ethereum Foundation Blog site \cite{b9} and the internet\cite{b9.5}. As shown in Table \ref{tab1}. We have enumerated important events in chronological order. The content of events implies that events 1, 2, 3, 7, 8, 9 are positive. Events 4, 5, and 6 are negative events. Different events have different effects on $ETN$. In the following sections, we will focus on the discussion that different events have an impact on the topological properties of Ethereum.
+
+\begin{table}[htbp]
+    \caption{Important events on Ethereum}
+    \begin{center}
+    \begin{tabular}{ccp{5cm}} \hline
+    \textbf{No.} & \textbf{\textit{Date}}& \textbf{\textit{Event}}\\ \hline
+
+1	& 16.01.01 	& Ethereum was recognized by the market and its currency value started to rise sharply$^{\mathrm{a}}. $\\
+2	& 16.03.14	& The first official version of Ethereum \textit{Homeland} released$^{\mathrm{b}}$.\\
+3	& 16.04.30	& THE DAO project started crowdfunding and it raised more than 100 million U.S. dollars worth of ether$^{\mathrm{a}}$.\\
+4	& 16.06.17	& The DAO project has discovered some bugs and was hacked, and transferred a large amount of ether$^{\mathrm{a}}$.\\
+5	& 16.07.20	& For the DAO event. Ethereum developers decided to carry out the hard fork protecting THE DAO project. Violates the decentralized concept. It triggered the division of the Ethereum community$^{\mathrm{b}}$. \\
+6	& 16.09.22	& Jeffrey Wilcke, the co-founder of Ethereum, announced that the Ethereum network suffered a DOS attack$^{\mathrm{b}}$.\\
+7	& 16.11.22	& Spurious Dragon hard fork solved DOS attacks$^{\mathrm{b}}$.\\
+8	& 17.03.01 	& The Ethereum Enterprise Alliance was established, with important members including J.P. Morgan, Microsoft, and Intel$^{\mathrm{a}}.$\\
+9	& 17.05.22	& The Ethereum Enterprise Alliance added 86 new members$^{\mathrm{a}}$. \\ \hline
+   \multicolumn{3}{p{7cm}}{$^{\mathrm{a}}$ are collected from Internet\cite{b9.5}}\\
+   \multicolumn{3}{p{7cm}}{$^{\mathrm{b}}$ are collected by Ethereum Foundation Blog\cite{b9}}
+    \end{tabular}
+    \label{tab1}
+    \end{center}
+\end{table}
+
+\subsection{Network Models}
+
+Ether is a digital currency on Ethereum. A transaction is made by sending Ether from one account to another account. We focus on the transactions between external owned accounts that form $ETN$. Therefore, in the construction of the network, we ignore transactions whose sender and receiver are the same account.
+A graph $G=(V, E)$, where $V$ is the set of external accounts involved in the transaction. $E$ is the set of edges. $ E= \{\left(v_i,v_j\right)|v_i,v_j\in V\} $. An edge $(v_i,v_j)$ indicates that a transaction has occurred between accounts $v_i$ and $v_j$. Thus $ETN$ is an undirected and unweighted graph. We use a total of 670 days of data from August 10th, 2015 to June 09th, 2017, containing a total of 28217982 transactions, 2079600 nodes, and 4246738 edges. To highlight the evolution of the network, we built up the network daily, hence, there are totally 670 networks.
+
+\section{Results and Analysis}
+%\subsection{The Evolution of $ETN$'s Size Follows Events}
+
+In order to understand the evolution of the Ethereum network, we investigated the relationship between the size over time of $ETN$. Fig. \ref{fig1} shows that, in general, the number of nodes increases with time. However, the number of nodes in the network is also affected by important events. Events 1, 8, and 9 are positive news for external users to participate on Ethereum transactions. Therefore, the size of the network increases significantly as events occur. Events 2, 3, 4, and 7 made the number of nodes fluctuate. Event 5 split Ethereum. Therefore, the number of nodes in $ETN$ stops growing. Event 6 is a DOS attack on the Ethereum network. It may make the service speed of Ethereum to be slow. It may reduce the user's willingness to make a transaction. Therefore, the number of nodes in $ETN$ will decrease in the following time, until event 7 completely fixed the vulnerability. Besides, it can be seen from Fig \ref{fig1} that whenever an event occurs, the network scale will fluctuate. Especially after event 7. Fig. \ref{fig1} implies that users are sensitive to events.
+
+The size of $ETN$ represents the number of users participating in the transaction at the corresponding time. This reflects the heat of the market. As the reputation of Ethereum increases, external users will be attracted to the Ethereum trading market. We call users who have never participated in transactions before as new users. Therefore, we investigated the new user growth rate of $ETN$, and we found that between event 2 and event 8, the growth rate of new users of Ethereum was linear and increased by about 1,950.37 nodes per day on average. The number of Ethereum users increased super linearly from event 8 to event 9, afterward and before event 2. Therefore, different events have different influences on Ethereum users. Events 1, 8, 9 can attract new users to participate while events 2, 3, 4, 5, 6, 7 affect existing users to participate in transactions.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{img-0-0.eps}
+\caption{The number of nodes $N$ on $ETN$ over time. The time labels, from 1 to 670, correspond to each day from August 10th, 2015 to June 9th, 2017. The blue vertical line in the figure represents the time when the events in Table \ref{tab1} occurred.}
+\label{fig1}
+\end{figure}
+
+%\subsection{Densification Power-law in the $ETN$}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{img-1-0.eps}
+\caption{Average degree $ \left \langle k \right \rangle$ of $ETN$ over time. The time labels, from 1 to 670, correspond to each day from August 10th, 2015 to June 9th, 2017. The blue vertical line in the figure represents the time when the events in Table \ref{tab1} occurred. }
+\label{fig2}
+\end{figure}
+
+In order to explore the relationship between $ETN$ nodes and edges, we calculate the Pearson's correlation coefficient between the node number $N(t)$ and the edge number $M(t)$ over the time, and show that the correlation coefficient $\rho \approx 0.996$. This implies that the relationship between the number of nodes and edges is likely to be strongly positive. The average degree is
+
+\begin{equation}
+\left\langle k \right\rangle (t)=\frac{2M(t)}{N(t)}.
+\end{equation}
+
+Fig. \ref{fig2} shows that the evolution of the average degree over time, it is found that the evolution of the average degree is closely related to the occurrence of events.
+The average degree of $ETN$ decreases to about 2.7 when event 1 occurs until event 2 stops. This is because new users are entering Ethereum following the rise on Ethereum, but these users do not participate in transactions very often, thus the average degree decreases. Events 5 and 6 are negative news for Ethereum and the average degree decreases. Events 7, 8, and 9 are positive news, hence, the average degree increases. Although the average degree is not a constant, the range of fluctuations $(2.1,3.2)$ is small comparing with other real world networks.
+
+%\subsection{The Evolution of $ETN$'s Heterogeneous}
+
+Degree distribution $P(k)$ is an important property for understanding the structure of network\cite{barabasi2003scale}\cite{albert1999diameter}\cite{barabasi1999emergence}. It is shown from Fig. \ref{fig3} that the degree distributions of $ETN$ follows the power-law distribution $P(k)\sim k^\gamma$, and the degree exponent $\gamma$ indicates the heterogeneity of the network. The smaller the $\gamma$, the more heterogeneous the network is. The degree exponent of $ETN$ is in the range of $(2.85,4.46)$.
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{degree-dis.eps}
+\caption{The degree distribution of $ETN$, extracted in February 25th, 2016, September 12th, 2016 and March 31th, 2017.}
+\label{fig3}
+\end{figure}
+
+We use the variance of degree sequence to explore the evolution of $ETN$'s heterogeneity over time:
+\begin{equation}
+ \sigma^2=\left\langle k^2 \right\rangle-\left\langle k \right\rangle^2,
+\end{equation}
+where $ \left\langle \bullet \right\rangle $ indicates an average value over nodes and $k$ is the degree of a node. The bigger variance is, the more heterogeneity the degree sequence is. We observe from Fig. \ref{fig4}  that $ETN$ evolution of variance of degree on Ethereum follows the event. Between event 1 and event 2, the heterogeneity of the $ETN$ gradually increases. Between events 2 and 5, the heterogeneity of the network slowly increases. After event 6, $\sigma^2$ decreases sharply until event 7 fixes the problem. Between events 7 and 9 the $ETN$'s $\sigma^2$ rises.
+
+Besides, Fig. \ref{fig5} shows the evolution of the $ETN$'s maximum degree over time. It is found that the evolution of $k_{max}$ and $\sigma^2$ is consistent with the trend. From the evolution of $k_{max}$ and $\sigma^2$, we find that the heterogeneity of network increases with positive events and decreases with negative events. The evolution of the maximum degree of the network also depicts the evolution of the influence of the most influential nodes in the network. Compared to $\sigma^2$, $k_{max}$ owns a higher growth rate between event 2 and event 6 which implies that the influence of the central node of the network increases with the increase of the network's heterogeneity.
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{img-4-3.eps}
+\caption{The variance of the degree sequence $\sigma^2$ on $ETN$ over time. The time labels, from 1 to 670, correspond to each day from August 10th, 2015 to June 9th, 2017. The blue vertical line in the figure represents the time when the events in Table \ref{tab1} occurred.}
+\label{fig4}
+\end{figure}p
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{img-4-5.eps}
+\caption{The maximum degree $k_{max}$ on $ETN$ over time. The time labels, from 1 to 670, correspond to each day from August 10th, 2015 to June 9th, 2017. The blue vertical line in the figure represents the time when the events in Table \ref{tab1} occurred.}
+\label{fig5}
+\end{figure}
+
+%\subsection{$ETN$ has a degree disassortative mixing pattern}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{knn.eps}
+\caption{Log-log plot of the average neighbor degree $k_{nn}$ versus degree $k$, extracted on February 25th, 2016, September 12th, 2016, and March 31th, 2017. }
+\label{fig6}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{ac.eps}
+\caption{The degree correlation coefficient of $ETN$ over time. The black cycles denote empirical degree correlation coefficient r(t) of $ETN$ and blue $\times$ denote randomized the degree correlation coefficient $r'(t)$ of the randomized graph generated by the configuration model with a given degree sequence \cite{newman2003structure}. Each result is averaged by 10 randomized graphs. The time labels, from 1 to 670, correspond to each day from August 10th, 2015 to June 9th,2017. The blue vertical line in the figure represents the time when the events in Table \ref{tab1} occurred.}
+\label{fig7}
+\end{figure}
+
+We investigate the assortativity of $ETN$ by two methods, the average nearest neighbor degree and the degree correlation coefficient. The average nearest neighbor degree of node one $i$ is defined as\cite{pastor2001dynamical}:
+\begin{equation}
+k_{nn,i} = \frac{1}{k_i}\sum_{j \in \mathcal{N}_{i}} k_j ,
+\end{equation}
+where $\mathcal{N}_{i}$ is the set of nearest neighbors of $i$ and $k_i$ indicates the degree of node $i$. By this definition, we calculate the average degree of the nearest neighbors of nodes whose degrees are $k$, denoted as $k_{nn}(k)$. The $ETN$ is degree assortative or disassortative if  $k_{nn}(k)$ is an increasing or decreasing function of $k$. Fig. \ref{fig6} shows that $ k_{nn}(k)$ is decreasing function of $k$. It means that, $ETN$ shows disassortative mixing pattern by degree.
+
+Furthermore, we use the degree correlation coefficient to measure the assortativity of $ETN$ \cite{newman2002assortative}:
+\begin{equation}
+r=\frac{\left\langle ij \right\rangle - \left\langle i \right\rangle \left\langle j \right\rangle}{\left\langle i^2 \right\rangle \left\langle j^2 \right\rangle},
+\end{equation}
+where $i$ and $j$ are the degrees of two nodes at the two ends of an edge and $ \left\langle \bullet \right\rangle $ represents the average over all edges. If the degree correlation coefficient of one network is negative(positive), the network has a disassortative(assortative) mixing pattern which implies hubs tend to connect small-degree nodes (hubs). However, the degree correlation coefficient is dependent on degree distribution\cite{zhou2007structural} so it is necessary to compare with randomized graphs with the same degree sequence. We obtain randomized graphs by configuration model with a given degree sequence\cite{newman2003structure}. Fig. \ref{fig7} shows that the empirical degree correlation coefficient is smaller than the randomized graph, which indicates that the $ETN$ has a disassortative mixing pattern by degree. Furthermore, the empirical degree correlation coefficient fluctuates more obviously and is affected more significantly by events.
+
+%\subsection{The $ETN$ is less clustered than Randomized Network}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{cc.eps}
+\caption{The clustering coefficient of $ETN$ over time. The black cycles denote empirical clustering coefficient $CC(t)$ of $ETN$ and blue $\times$ denote randomized the clustering coefficient $CC'(t)$ of the randomized graph which is generated by the configuration model with a given degree sequence.}
+\label{fig8}
+\end{figure}
+
+The clustering coefficient characterizes the probability that one node's neighbors are also its neighbors, which measures the density of triangles in the network \cite{watts1998collective}. And the clustering coefficient of a node $i$ is defined as:
+\begin{equation}
+C_i = \frac{2E_i}{k_i(k_i-1)} ,
+\end{equation}
+where $k_i$ is the degree of $i$ and $E_i$ is the number of edges between neighbors of node $i$. The clustering coefficient of a network $CC$ is the average clustering coefficient value over all nodes. i.e.
+\begin{equation}
+CC = \left\langle C_i \right\rangle .
+\end{equation}
+As it is shown in Fig. \ref{fig8} that the clustering coefficient $CC$ of $ETN$ is smaller than the randomized graph. It implies that it is hard to create triangles in $ETN$ on a daily scale.
+
+%\subsection{The Evolution of $ETN$'s maximum shell}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{kshell-core-min-degree.eps}
+\caption{The maximum shell of $ETN$ over time. The time labels, from 1 to 670, correspond to each day from August 10th, 2015 to June 9th, 2017. The blue vertical line in the figure represents the time when the events in Table \ref{tab1} occurred.}
+\label{fig9}
+\end{figure}
+
+Hierarchy property is a crucial structural of networks \cite{kitsak2010identification}. K-shell is a measure to research the hierarchy of networks \cite{pittel1996sudden}. The maximum shell is the core of $ETN$. The steps for the k-shell decomposition method as follows \cite{carmi2007model}: (i)Repeating deleting nodes with degree $k$ and until there is no node with degree $k$. (ii) Increasing k by 1. (iii) Repeating step (i), step (ii) until no node left in the network. From Fig. \ref{fig9}, we observe that $ETN$'s maximum shell grows stepwise and it is affected obviously by events. Fig. \ref{fig10} shows that the evolution of the maximum shell's size. It grows rapidly at the start because of the smaller $k$ of maximum shell. Following the increasing of $k$ of maximum shell, the size of maximum shell decreases until event 8. After event 8, the size of $ETN$ grow rapidly. However, the $k$ of maximum shell also grows and thus the size of maximum shell grows a little.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{kshell-core-node-number.eps}
+\caption{The size of the maximum shell of $ETN$ over time. The time labels, from 1 to 670, correspond to each day from August 10th, 2015 to June 9th, 2017. The blue vertical line in the figure represents the time when the events in Table \ref{tab1} occurred.}
+\label{fig10}
+\end{figure}
+
+\section{Conclusion and Discussion}
+
+In this paper, we investigated the evolution of $ETN$ from August 10th, 2015 to June 9th, 2017. The evolution of topology properties in $ETN$ has a close relationship with events. The positive(negative) events may increase(decrease) size and heterogeneity of $ETN$. The average degree of $ETN$ fluctuates slightly and the high correlation coefficient between nodes and edges implies that they have a strongly positive correlation relationship. The degree correlation coefficient and the clustering coefficient are small than the randomized graph, which means that $ETN$ has the disassortative mixing pattern by degree and own few triangles. By k-shell decomposition method, $ETN$'s maximum shell grows stepwise. This research may help us understand the evolution of blockchain and provide clues to disclose the underlying evolution mechanism of blockchain projects.
+
+
+\bibliographystyle{IEEEtran}      %LaTex Class文件, IEEEtran为给定模板格式定义文件名
+\bibliography{refv4}
+
+
+\end{CJK*}
+\end{document}
